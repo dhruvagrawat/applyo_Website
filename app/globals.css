@@ -36,7 +36,7 @@
   --accent-foreground: oklch(0.205 0 0);
   --destructive: oklch(0.577 0.245 27.325);
   --destructive-foreground: oklch(0.577 0.245 27.325);
-  --border: #424242;
+  --border: #292929;
   --input: oklch(0.922 0 0);
   --ring: oklch(0.708 0 0);
   --chart-1: oklch(0.646 0.222 41.116);
@@ -93,28 +93,20 @@
 @utility container {
   margin-inline: auto;
   padding-inline: 1.25rem;
+  max-width: 1200px;
 
   @media (width >= 640px) {
-    padding-inline: 1.5rem;
-  }
-
-  @media (width >= 768px) {
     padding-inline: 2rem;
   }
 
   @media (width >= 1024px) {
     padding-inline: 3rem;
   }
-
-  @media (width >= 1280px) {
-    max-width: 1280px;
-    padding-inline: 4rem;
-  }
 }
 
 @theme inline {
   --font-sans: "Sentient", system-ui, -apple-system, sans-serif;
-  --font-mono: "Geist Mono", ui-monospace, monospace;
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
@@ -169,22 +161,30 @@ html {
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: "Sentient", system-ui, -apple-system, sans-serif;
+  background: #000;
+  color: #fff;
+  font-family: Arial, Helvetica, sans-serif;
   overflow-x: hidden;
 }
 
+/* Sentient font class */
 .font-sentient {
   font-family: "Sentient", system-ui, -apple-system, sans-serif;
 }
 
+/* Fixed header offset for anchor links */
+section[id] {
+  scroll-margin-top: 5rem;
+}
+
+/* WebGL background layer */
 #webgl {
   top: 0;
   left: 0;
   position: fixed;
   height: 100svh;
   width: 100%;
+  z-index: 0;
 }
 
 #webgl canvas {
@@ -192,130 +192,23 @@ body {
   height: 100%;
 }
 
-main {
-  position: relative;
-  z-index: 10;
-}
-
-/* Fade-in animation for sections */
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
-@keyframes slideDown {
-  from {
-    opacity: 0;
-    transform: translateY(-10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes pulse-glow {
-  0%, 100% { box-shadow: 0 0 8px 2px rgba(255, 199, 0, 0.3); }
-  50% { box-shadow: 0 0 16px 4px rgba(255, 199, 0, 0.5); }
-}
-
-@keyframes float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-6px); }
-}
-
-@keyframes scroll-hint {
-  0%, 100% { opacity: 0.4; transform: translateY(0); }
-  50% { opacity: 1; transform: translateY(6px); }
-}
-
-.animate-fade-in-up {
-  animation: fadeInUp 0.7s ease-out forwards;
-}
-
-.animate-fade-in {
-  animation: fadeIn 0.5s ease-out forwards;
-}
-
-.animate-slide-down {
-  animation: slideDown 0.4s ease-out forwards;
-}
-
-.animate-pulse-glow {
-  animation: pulse-glow 2.5s ease-in-out infinite;
-}
-
-.animate-float {
-  animation: float 3s ease-in-out infinite;
-}
-
-.animate-scroll-hint {
-  animation: scroll-hint 2s ease-in-out infinite;
-}
-
-/* Staggered animation delays */
-.delay-100 { animation-delay: 100ms; }
-.delay-200 { animation-delay: 200ms; }
-.delay-300 { animation-delay: 300ms; }
-.delay-400 { animation-delay: 400ms; }
-.delay-500 { animation-delay: 500ms; }
-.delay-600 { animation-delay: 600ms; }
-.delay-700 { animation-delay: 700ms; }
-
-/* Glass effect utility */
-.glass {
-  background: rgba(0, 0, 0, 0.4);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.06);
-}
-
-.glass-subtle {
-  background: rgba(0, 0, 0, 0.2);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.04);
-}
-
-/* Gradient text utility */
-.text-gradient {
-  background: linear-gradient(135deg, #ffc700 0%, #ffdb4d 50%, #ffc700 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-/* Selection color */
+/* Selection */
 ::selection {
-  background: rgba(255, 199, 0, 0.3);
+  background: rgba(255, 199, 0, 0.25);
   color: #fff;
 }
 
-/* Scrollbar styling */
+/* Scrollbar */
 ::-webkit-scrollbar {
-  width: 6px;
+  width: 5px;
 }
-
 ::-webkit-scrollbar-track {
   background: transparent;
 }
-
 ::-webkit-scrollbar-thumb {
-  background: rgba(255, 199, 0, 0.2);
+  background: #292929;
   border-radius: 3px;
 }
-
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 199, 0, 0.4);
+  background: #404040;
 }

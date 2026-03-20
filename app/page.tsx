@@ -15,14 +15,16 @@ export default function Home() {
   return (
     <>
       <Hero />
-      <ValueProps />
-      <HowItWorks />
-      <PlatformFeatures />
-      <Testimonials />
-      <SecurityCompliance />
-      <FAQSection />
-      <CTASection />
-      <Footer />
+      <div className="relative z-10 bg-black">
+        <ValueProps />
+        <HowItWorks />
+        <PlatformFeatures />
+        <Testimonials />
+        <SecurityCompliance />
+        <FAQSection />
+        <CTASection />
+        <Footer />
+      </div>
       <Leva hidden />
     </>
   )
