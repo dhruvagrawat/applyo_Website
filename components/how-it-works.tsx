@@ -1,46 +1,84 @@
+"use client"
+
 import { Pill } from "./pill"
 import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "./ui/accordion"
+import { Upload, Search, Rocket } from "lucide-react"
+import { useRef, useEffect, useState } from "react"
+
+const steps = [
+  {
+    icon: Upload,
+    title: "Import & set up",
+    subtitle: "Get started in under 2 minutes",
+    details: [
+      "Upload or paste your existing resume",
+      "Pick roles and industries you're targeting",
+      "Set your tone and style preferences",
+    ],
+  },
+  {
+    icon: Search,
+    title: "Match & optimize",
+    subtitle: "AI-powered precision tailoring",
+    details: [
+      "Paste a job description or link",
+      "Get your ATS score with gap highlights",
+      "Receive tailored cover letters instantly",
+    ],
+  },
+  {
+    icon: Rocket,
+    title: "Apply your way",
+    subtitle: "Stay in full control",
+    details: [
+      "Autofill application fields anywhere",
+      "Auto-Applier submits per your rules",
+      "Track every application in one place",
+    ],
+  },
+]
 
 export function HowItWorks() {
-  const steps = [
-    {
-      title: "Import & set up",
-      details: ["Upload or paste your resume(s)", "Pick roles you're targeting", "Set tone and industry preferences"],
-    },
-    {
-      title: "Match & optimize",
-      details: ["Paste a JD or link", "Get ATS score and gap highlights", "Receive tailored cover letters"],
-    },
-    {
-      title: "Apply your way",
-      details: ["Autofill fields anywhere", "Auto-Applier: Submit per your rules", "Stay fully in control"],
-    },
-  ]
+  const sectionRef = useRef<HTMLDivElement>(null)
+  const [visible, setVisible] = useState(false)
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting) setVisible(true) },
+      { threshold: 0.1 }
+    )
+    if (sectionRef.current) observer.observe(sectionRef.current)
+    return () => observer.disconnect()
+  }, [])
 
   return (
-    <section id="how-it-works" className="py-20 md:py-32 container relative z-10 border-t border-border/30">
-      <div className="text-center mb-16">
-        <Pill className="mb-4 justify-center">HOW IT WORKS</Pill>
-        <h2 className="text-4xl md:text-5xl font-sentient mb-4">Your Application in 3 Steps</h2>
+    <section
+      id="how-it-works"
+      ref={sectionRef}
+      className="py-24 md:py-36 container relative z-10 border-t border-white/[0.04]"
+    >
+      <div className="text-center mb-16 md:mb-20">
+        <Pill className="mb-6 justify-center">HOW IT WORKS</Pill>
+        <h2 className="text-3xl sm:text-4xl md:text-5xl font-sentient mb-5">
+          Your application in <span className="text-gradient">3 simple steps</span>
+        </h2>
       </div>
 
-      {/* Collapsible demo video */}
-      <div className="text-center mb-8">
+      {/* Demo video accordion */}
+      <div className="text-center mb-14">
         <Accordion type="single" collapsible defaultValue="">
-          <AccordionItem value="video" className="inline-block">
-            <AccordionTrigger>
-              <Pill className="px-4 h-9 text-sm md:text-base">WATCH A SHORT DEMO</Pill>
+          <AccordionItem value="video" className="inline-block border-none">
+            <AccordionTrigger className="hover:no-underline">
+              <Pill className="px-5 h-10 text-sm cursor-pointer hover:border-primary/30 transition-colors">
+                WATCH A SHORT DEMO
+              </Pill>
             </AccordionTrigger>
             <AccordionContent>
-              <div className="mx-auto w-full px-4 sm:px-0">
-                <div className="mx-auto w-full md:w-[50vw] md:max-w-none relative pt-[62%] md:pt-[56.25%]">
-                  {/*
-                    Place a video file at `public/how-it-works.mp4` to use the local video.
-                    If you prefer an embedded YouTube/Vimeo video, replace the <video> with an <iframe>.
-                  */}
+              <div className="mx-auto w-full px-4 sm:px-0 mt-4">
+                <div className="mx-auto w-full md:w-[50vw] md:max-w-3xl relative pt-[62%] md:pt-[56.25%]">
                   <video
                     controls
-                    className="absolute inset-0 w-full h-full rounded-lg shadow-2xl border border-border/30 object-cover"
+                    className="absolute inset-0 w-full h-full rounded-xl shadow-2xl border border-white/[0.06] object-cover"
                     src="/how-it-works.mp4"
                     playsInline
                   >
@@ -53,35 +91,51 @@ export function HowItWorks() {
         </Accordion>
       </div>
 
-      <div className="grid md:grid-cols-3 gap-8 md:gap-6">
-        {steps.map((step, i) => (
-          <div key={i} className="relative">
-            {/* Step indicator */}
-            <div className="flex items-start gap-4 mb-6">
-              <div className="w-10 h-10 rounded-full border-2 border-primary bg-primary/10 flex items-center justify-center flex-shrink-0">
-                <span className="font-sentient text-lg text-primary">{i + 1}</span>
-              </div>
-              <div className="flex-1">
-                <h3 className="text-xl font-sentient mb-2">{step.title}</h3>
+      {/* Steps */}
+      <div className="grid md:grid-cols-3 gap-6 md:gap-8 max-w-5xl mx-auto">
+        {steps.map((step, i) => {
+          const Icon = step.icon
+          return (
+            <div
+              key={i}
+              className={`relative group ${visible ? "animate-fade-in-up" : "opacity-0"}`}
+              style={{ animationDelay: `${i * 150}ms`, animationFillMode: "both" }}
+            >
+              {/* Connector line between steps */}
+              {i < steps.length - 1 && (
+                <div className="hidden md:block absolute top-8 -right-4 w-8 h-px bg-gradient-to-r from-primary/30 to-transparent" />
+              )}
+
+              <div className="glass rounded-xl p-7 md:p-8 h-full transition-all duration-300 hover:border-primary/15">
+                {/* Step number + icon */}
+                <div className="flex items-center gap-4 mb-5">
+                  <div className="relative">
+                    <div className="w-12 h-12 rounded-xl border border-primary/30 bg-primary/10 flex items-center justify-center group-hover:bg-primary/15 group-hover:border-primary/40 transition-all duration-300">
+                      <Icon className="w-5 h-5 text-primary" />
+                    </div>
+                    <span className="absolute -top-2 -right-2 w-5 h-5 rounded-full bg-primary text-primary-foreground text-[10px] font-mono font-bold flex items-center justify-center">
+                      {i + 1}
+                    </span>
+                  </div>
+                  <div>
+                    <h3 className="text-lg font-sentient">{step.title}</h3>
+                    <p className="text-foreground/40 text-xs font-mono mt-0.5">{step.subtitle}</p>
+                  </div>
+                </div>
+
+                {/* Details */}
+                <ul className="space-y-3 ml-1">
+                  {step.details.map((detail, j) => (
+                    <li key={j} className="text-foreground/50 font-mono text-sm flex items-start gap-3">
+                      <span className="text-primary/60 mt-0.5 text-xs">&#9656;</span>
+                      <span>{detail}</span>
+                    </li>
+                  ))}
+                </ul>
               </div>
             </div>
-
-            {/* Details list */}
-            <ul className="space-y-2 ml-14">
-              {step.details.map((detail, j) => (
-                <li key={j} className="text-foreground/60 font-mono text-sm flex items-start gap-2">
-                  <span className="text-primary mt-1">→</span>
-                  <span>{detail}</span>
-                </li>
-              ))}
-            </ul>
-
-            {/* Connector line */}
-            {i < steps.length - 1 && (
-              <div className="hidden md:block absolute top-5 -right-4 w-8 h-0.5 bg-gradient-to-r from-primary/50 to-transparent"></div>
-            )}
-          </div>
-        ))}
+          )
+        })}
       </div>
     </section>
   )

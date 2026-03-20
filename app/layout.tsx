@@ -10,10 +10,9 @@ const geistMono = Geist_Mono({
 })
 
 export const metadata: Metadata = {
-  title: "Applyo — AI Resume + Cover Letter + Autofill, now with optional Auto-Applier",
+  title: "Applyo — AI-Powered Resumes, Cover Letters & Auto-Apply",
   description:
     "Applyo helps students and fresh grads apply faster with ATS-ready resumes, tailored cover letters, one-click autofill, and an optional Auto-Applier you fully control.",
-  generator: "v0.app",
   icons: {
     icon: "/favicon.ico",
     shortcut: "/favicon.ico",
@@ -27,7 +26,7 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className="scroll-smooth">
       <body className={`${geistMono.variable} antialiased`} suppressHydrationWarning>
         <Header />
         {children}

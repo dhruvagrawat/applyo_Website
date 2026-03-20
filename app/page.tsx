@@ -7,6 +7,7 @@ import { PlatformFeatures } from "@/components/platform-features"
 import { Testimonials } from "@/components/testimonials"
 import { SecurityCompliance } from "@/components/security-compliance"
 import { FAQSection } from "@/components/faq-section"
+import { CTASection } from "@/components/cta-section"
 import { Footer } from "@/components/footer"
 import { Leva } from "leva"
 
@@ -16,10 +17,11 @@ export default function Home() {
       <Hero />
       <ValueProps />
       <HowItWorks />
-  <PlatformFeatures />
+      <PlatformFeatures />
       <Testimonials />
       <SecurityCompliance />
       <FAQSection />
+      <CTASection />
       <Footer />
       <Leva hidden />
     </>

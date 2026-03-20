@@ -1,88 +1,87 @@
-"use client";
+"use client"
 
-import { cn } from "@/lib/utils";
-import * as Dialog from "@radix-ui/react-dialog";
-import { Menu, X } from "lucide-react";
-import Link from "next/link";
-import { useState } from "react";
+import { cn } from "@/lib/utils"
+import * as Dialog from "@radix-ui/react-dialog"
+import { Menu, X } from "lucide-react"
+import Link from "next/link"
+import { useState } from "react"
 
-interface MobileMenuProps {
-  className?: string;
-}
+const menuItems = [
+  { name: "Why Applyo", href: "#value-props" },
+  { name: "How It Works", href: "#how-it-works" },
+  { name: "Features", href: "#platform-features" },
+  { name: "FAQ", href: "#faq" },
+  { name: "Contact", href: "#contact" },
+]
 
-export const MobileMenu = ({ className }: MobileMenuProps) => {
-  const [isOpen, setIsOpen] = useState(false);
+export const MobileMenu = ({ className }: { className?: string }) => {
+  const [isOpen, setIsOpen] = useState(false)
 
-  const menuItems = [
-    { name: "Why Applyo", href: "#value-props" },
-    { name: "How It Works", href: "#how-it-works" },
-    { name: "Platform", href: "#platform-features" },
-    { name: "FAQ", href: "#faq" },
-    { name: "Contact", href: "#contact" },
-  ];
-
-  const handleLinkClick = () => {
-    setIsOpen(false);
-  };
+  const handleLinkClick = () => setIsOpen(false)
 
   return (
-    <Dialog.Root modal={false} open={isOpen} onOpenChange={setIsOpen}>
+    <Dialog.Root modal open={isOpen} onOpenChange={setIsOpen}>
       <Dialog.Trigger asChild>
         <button
           className={cn(
-            "group lg:hidden p-2 text-foreground transition-colors",
+            "lg:hidden p-2 text-foreground/70 hover:text-foreground transition-colors rounded-lg hover:bg-white/[0.04]",
             className
           )}
-          aria-label="Open menu"
+          aria-label={isOpen ? "Close menu" : "Open menu"}
         >
-          <Menu className="group-[[data-state=open]]:hidden" size={24} />
-          <X className="hidden group-[[data-state=open]]:block" size={24} />
+          {isOpen ? <X size={22} /> : <Menu size={22} />}
         </button>
       </Dialog.Trigger>
 
       <Dialog.Portal>
-        <div
-          data-overlay="true"
-          className="fixed z-30 inset-0 bg-black/50 backdrop-blur-sm"
-        />
+        <Dialog.Overlay className="fixed inset-0 z-40 bg-black/70 backdrop-blur-md data-[state=open]:animate-fade-in" />
 
-        <Dialog.Content
-          onInteractOutside={(e) => {
-            if (
-              e.target instanceof HTMLElement &&
-              e.target.dataset.overlay !== "true"
-            ) {
-              e.preventDefault();
-            }
-          }}
-          className="fixed top-0 left-0 w-full z-40 py-28 md:py-40"
-        >
-          <Dialog.Title className="sr-only">Menu</Dialog.Title>
+        <Dialog.Content className="fixed inset-0 z-50 flex flex-col data-[state=open]:animate-fade-in">
+          <Dialog.Title className="sr-only">Navigation Menu</Dialog.Title>
 
-          <nav className="flex flex-col space-y-6 container mx-auto">
-            {menuItems.map((item) => (
+          {/* Close button at top right */}
+          <div className="flex justify-end p-6">
+            <button
+              onClick={() => setIsOpen(false)}
+              className="p-2 text-foreground/60 hover:text-foreground transition-colors"
+              aria-label="Close menu"
+            >
+              <X size={24} />
+            </button>
+          </div>
+
+          <nav className="flex flex-col items-center justify-center flex-1 gap-2 -mt-16">
+            {menuItems.map((item, i) => (
               <Link
                 key={item.name}
                 href={item.href}
                 onClick={handleLinkClick}
-                className="text-xl font-mono uppercase text-foreground/60 transition-colors ease-out duration-150 hover:text-foreground/100 py-2"
+                className="text-3xl font-sentient text-foreground/70 hover:text-primary transition-all duration-300 py-3 px-8 rounded-xl hover:bg-white/[0.03] animate-fade-in-up"
+                style={{ animationDelay: `${i * 80}ms`, animationFillMode: "both" }}
               >
                 {item.name}
               </Link>
             ))}
 
-            <div className="mt-6">
+            <div className="flex flex-col items-center gap-3 mt-10 animate-fade-in-up" style={{ animationDelay: "400ms", animationFillMode: "both" }}>
               <Link
-                href="/#sign-in"
+                href="https://app.applyo.app/auth/login"
                 onClick={handleLinkClick}
-                className="inline-block text-xl font-mono uppercase text-primary transition-colors ease-out duration-150 hover:text-primary/80 py-2"
+                className="uppercase text-sm tracking-wider font-mono px-8 py-3 rounded-lg border border-primary/30 text-primary hover:bg-primary/10 transition-all duration-200"
               >
                 Sign In
+              </Link>
+              <Link
+                href="https://app.applyo.app/"
+                onClick={handleLinkClick}
+                className="uppercase text-sm tracking-wider font-mono px-8 py-3 rounded-lg bg-primary text-primary-foreground hover:bg-primary/90 transition-all duration-200 font-medium"
+              >
+                Get Started Free
               </Link>
             </div>
           </nav>
         </Dialog.Content>
       </Dialog.Portal>
     </Dialog.Root>
-  );
-};
+  )
+}
