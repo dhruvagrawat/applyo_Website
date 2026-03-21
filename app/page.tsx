@@ -4,6 +4,7 @@ import { Hero } from "@/components/hero"
 import { ValueProps } from "@/components/value-props"
 import { HowItWorks } from "@/components/how-it-works"
 import { PlatformFeatures } from "@/components/platform-features"
+import { Traction } from "@/components/traction"
 import { Testimonials } from "@/components/testimonials"
 import { SecurityCompliance } from "@/components/security-compliance"
 import { FAQSection } from "@/components/faq-section"
@@ -15,10 +16,11 @@ export default function Home() {
   return (
     <>
       <Hero />
-      <div className="relative z-10 bg-black">
+      <div className="relative z-10 bg-background">
         <ValueProps />
         <HowItWorks />
         <PlatformFeatures />
+        <Traction />
         <Testimonials />
         <SecurityCompliance />
         <FAQSection />
